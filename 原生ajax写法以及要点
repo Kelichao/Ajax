@@ -1,0 +1,37 @@
+    // 原生ajax详细内容的总结
+	/*新建XHL对象
+	IE 5,6用的自己的对象
+	需要这样写
+	var xhr = new ActiveXObject(); 这个有相应的兼容写法
+	*/
+	var xhr = new XMLHttpRequest();
+
+	// onreadystatechange
+	xhr.onreadystatechange = function() {
+		debugger;
+		if(xhr.readyState == 4) {
+			if((xhr.status >= 200 && xhr.status <300) || xhr.status == 304) {
+				console.log(xhr.responseText);
+			} else {
+				console.log("请求不成功" + xhr.status);
+			}
+		}
+	};
+
+	/*发送一个请求 
+	1：请求方式，如果是get，可以将需要的参数都拼接在链接后面。(get/post大小写都可行)
+	2：请求页面，
+	3：是否异步,false可能会造成假死，我曾经有一个请求设置为false整个页面卡死了，现象特别奇怪，暂时不用了
+	@ 
+	get请求比较简单，这里用post的方式模拟一下
+	*/
+	xhr.open("POST", "example.php", "true");
+
+	// 设置请求头，这个请求头会默认将XHR对象设置成模仿表单提交
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	// 设置多个请求头,请求头我暂时还没有去深入研究，不过在传formData的时候不可以设置请求头
+	xhr.setRequestHeader("name", "Bob");
+
+	// 注意send必须在open之后设置，估计是浏览器在处理send的时候需要用到open里面的数据，可以设置为send(null),
+	xhr.send("a=1&b=2");// 这里不能有问号，不然它会自动识别为参数变成  '?a=1'
