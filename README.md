@@ -80,7 +80,19 @@ if () {
 系统出现异常，请联系管理员! 
 ```
 
-> 总结上述要点： 如果是一个不为空的对象（建议用try-catch包裹）
+> 总结上述要点： 如果是一个不为空的对象（建议用try-catch包裹）并弹窗处错误信息
+```js
+    .fail(function(response) {
+        var message = "错误 ";
+        try {
+            message += response.responseJSON.returnCode + " " + response.responseJSON.errorMessage;
+            notie.alert({text: message, time: 5});
+        } catch(e) {
+            message += response.responseText;
+            notie.alert({text: message, time: 5});
+        }
+    });
+```
 
 ### Ajax 自己总结了一下原生ajax的写法以及
 需要注意的要点 https://github.com/Kelichao/Ajax/issues
