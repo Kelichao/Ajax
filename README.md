@@ -15,7 +15,10 @@
 	data:{
 		a:1,
 		b:2,
-		c:[1,2,3]
+		c:[1,2,3],
+		d: {
+		    e: 123
+		}
 	}
 }
 ```
@@ -30,7 +33,7 @@
 	returnCode:"0",// 字符串
 	errorMessage:"参数错误",// 错误信息
 	// 常规数据
-	data: null || [] || {} || undefined
+	data: null // null || [] || {} || undefined
 }
 ```
 
@@ -53,10 +56,7 @@
 ```
 
 > 总结上述要点：先判断返回码，返回码returnCode:"0"正常,再判断data是不是一个有内容的对象，最后在data有内容的情况下是否有需要的字段（字段不一这个需要特殊处理）
-```js
-if () {
-}
-```
+
 
 # 二、请求失败
 
@@ -68,7 +68,7 @@ if () {
 {
     data: null
     errorMessage: "Invalid bound statement (not found)"
-    returnCode: "E99999"
+    returnCode: "E99999" // 直接爆出这个代码
 }
 ```
 
@@ -80,9 +80,7 @@ if () {
 系统出现异常，请联系管理员! 
 ```
 
-
-
-> 总结上述要点： 如果是一个不为空的对象（建议用try-catch包裹）并弹窗处错误信息
+> 总结上述错误要点： 如果是一个不为空的对象（建议用try-catch包裹）并弹窗处错误信息
 ```js
     .fail(function(response) {
         var message = "错误 ";
